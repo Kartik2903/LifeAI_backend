@@ -1,0 +1,45 @@
+{
+  "name": "lifeai-backend",
+  "version": "1.0.0",
+  "description": "LifeAI Backend API with RAG",
+  "main": "dist/index.js",
+  "scripts": {
+    "dev": "nodemon --exec ts-node src/index.ts",
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "db:setup": "psql -U postgres -d lifeai -f database/schema.sql"
+  },
+  "keywords": [
+    "lifeai",
+    "rag",
+    "express",
+    "typescript"
+  ],
+  "author": "Kartik",
+  "license": "MIT",
+  "dependencies": {
+    "@types/multer": "^2.0.0",
+    "bcrypt": "^5.1.1",
+    "bull": "^4.11.5",
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "groq-sdk": "^0.37.0",
+    "ioredis": "^5.3.2",
+    "jsonwebtoken": "^9.0.2",
+    "multer": "^2.0.2",
+    "openai": "^4.52.0",
+    "pg": "^8.11.3"
+  },
+  "devDependencies": {
+    "@types/bcrypt": "^5.0.2",
+    "@types/cors": "^2.8.17",
+    "@types/express": "^4.17.21",
+    "@types/jsonwebtoken": "^9.0.7",
+    "@types/node": "^20.19.30",
+    "@types/pg": "^8.11.2",
+    "nodemon": "^3.1.11",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.9.3"
+  }
+}
