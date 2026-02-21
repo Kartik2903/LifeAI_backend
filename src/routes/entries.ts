@@ -4,7 +4,7 @@ import path from 'path';
 import fs from 'fs';
 import pool from '../config/database';
 import { authMiddleware } from '../middleware/auth';
-import { generateEmbedding, transcribeAudio } from '../services/groq';
+import { generateEmbedding, transcribeAudio, generateEntryResponse } from '../services/groq';
 
 const router = Router();
 
@@ -61,9 +61,13 @@ router.post('/text', async (req: Request, res: any) => {
       [userId, text, embeddingString, life_aspect ? [life_aspect] : [], 'text']
     );
 
+    // Generate AI response to the entry
+    const aiResponse = await generateEntryResponse(text);
+
     res.status(201).json({
       message: 'Entry created successfully',
-      entry: result.rows[0]
+      entry: result.rows[0],
+      ai_response: aiResponse
     });
   } catch (error) {
     console.error('Create entry error:', error);
@@ -101,9 +105,13 @@ router.post('/audio', upload.single('audio'), async (req: Request, res: any) => 
       [userId, transcribedText, transcribedText, audioUrl, embeddingString, life_aspect ? [life_aspect] : [], 'audio']
     );
 
+    // Generate AI response to the transcribed entry
+    const aiResponse = await generateEntryResponse(transcribedText);
+
     res.status(201).json({
       message: 'Audio entry created successfully',
-      entry: result.rows[0]
+      entry: result.rows[0],
+      ai_response: aiResponse
     });
   } catch (error) {
     console.error('Create audio entry error:', error);
